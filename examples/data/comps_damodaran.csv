@@ -1,0 +1,6 @@
+company,segment,ev_revenue,ev_ebitda,ebitda_margin,rev_growth,rule_of_40,nrr
+Computer Services,Damodaran US sector,1.5,14.1,9.0,27.1,36.1,
+Information Services,Damodaran US sector,2.2,11.5,17.3,6.8,24.1,
+Software (Entertainment),Damodaran US sector,9.1,22.0,34.9,16.7,51.6,
+Software (Internet),Damodaran US sector,9.6,30.3,9.5,29.2,38.7,
+Software (System & Application),Damodaran US sector,11.4,24.5,35.9,19.6,55.5,
