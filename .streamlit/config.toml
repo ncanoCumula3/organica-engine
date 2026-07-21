@@ -1,0 +1,12 @@
+[theme]
+primaryColor="#2C5560"
+backgroundColor="#FCFBF8"
+secondaryBackgroundColor="#F7F6F2"
+textColor="#1A1A1A"
+font="sans serif"
+base="light"
+[server]
+headless=true
+maxUploadSize=50
+[browser]
+gatherUsageStats=false
