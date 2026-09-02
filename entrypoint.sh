@@ -58,6 +58,31 @@ websockify --web=/usr/share/novnc 6080 127.0.0.1:5900 >/tmp/novnc.log 2>&1 &
 # noVNC's landing page asks which client to use; go straight to the desktop instead.
 ln -sf /usr/share/novnc/vnc.html /usr/share/novnc/index.html 2>/dev/null || true
 
+# ---------------------------------------------------------------- native access
+# xrdp on loopback for Microsoft Remote Desktop, sshd on loopback for Blink or Termius.
+# Neither is exposed to the internet; both are reached over the private network.
+sed -i 's/^port=3389/port=3389\naddress=127.0.0.1/' /etc/xrdp/xrdp.ini 2>/dev/null || true
+cat > /Users/nico/.xsession <<'XS'
+export XDG_CURRENT_DESKTOP=XFCE
+exec startxfce4
+XS
+chown nico:nico /Users/nico/.xsession
+adduser xrdp ssl-cert >/dev/null 2>&1 || true
+service xrdp start >/tmp/xrdp.log 2>&1 || true
+
+mkdir -p /run/sshd /Users/nico/.ssh
+sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+sed -i 's/^#\?ListenAddress.*/ListenAddress 127.0.0.1/' /etc/ssh/sshd_config
+grep -q '^ListenAddress' /etc/ssh/sshd_config || echo 'ListenAddress 127.0.0.1' >> /etc/ssh/sshd_config
+ssh-keygen -A >/dev/null 2>&1
+/usr/sbin/sshd >/tmp/sshd.log 2>&1 || true
+
+# the desktop and ssh both authenticate against the unix account
+echo "nico:${TTYD_PASSWORD:-changeme}" | chpasswd
+
+TS_AUTHKEY="${TS_AUTHKEY:-}" TS_HOSTNAME="${TS_HOSTNAME:-workstation}" \
+  /usr/local/bin/start_tailnet.sh 2>&1 | sed 's/^/[tailnet] /' &
+
 # ---------------------------------------------------------------- auth
 : "${TTYD_USER:=nico}"
 if [ -z "${TTYD_PASSWORD:-}" ]; then

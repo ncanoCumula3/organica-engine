@@ -31,9 +31,20 @@ ENV LANG=en_GB.UTF-8
 # window to appear, SuiteCloud OAuth cannot be completed and Selenium has no screen.
 RUN apt-get update && apt-get install -y --no-install-recommends \
       xvfb x11vnc xterm x11-utils x11-xserver-utils dbus-x11 \
+      xrdp xorgxrdp openssh-server \
       xfce4 xfce4-terminal xfce4-panel xfce4-session thunar \
       novnc websockify nginx apache2-utils \
   && rm -rf /var/lib/apt/lists/*
+
+# ---------------------------------------------------------------- Tailscale
+# Gives the container a private address the phone can reach directly, which is the only
+# way past this platform's single-HTTP-port limit. Native RDP and SSH clients then work.
+RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg \
+      -o /usr/share/keyrings/tailscale-archive-keyring.gpg \
+ && curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list \
+      -o /etc/apt/sources.list.d/tailscale.list \
+ && apt-get update && apt-get install -y --no-install-recommends tailscale \
+ && rm -rf /var/lib/apt/lists/*
 
 # ---------------------------------------------------------------- Chrome
 # Google Chrome stable on amd64; Chromium on arm64, where Google publishes no build.
@@ -103,6 +114,7 @@ COPY entrypoint.sh        /usr/local/bin/entrypoint.sh
 COPY bootstrap.sh         /usr/local/bin/bootstrap.sh
 COPY restore_workspace.sh /usr/local/bin/restore_workspace.sh
 COPY start_chrome.sh      /usr/local/bin/start_chrome.sh
+COPY start_tailnet.sh     /usr/local/bin/start_tailnet.sh
 COPY nscreds              /usr/local/bin/nscreds
 COPY ns_login.py          /usr/local/bin/ns_login.py
 COPY relink_git.sh        /usr/local/bin/relink_git.sh
@@ -110,7 +122,7 @@ COPY nginx.conf.template  /etc/nginx/nginx.conf.template
 COPY phone/               /usr/share/claude-phone/
 RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/bootstrap.sh \
              /usr/local/bin/restore_workspace.sh /usr/local/bin/start_chrome.sh \
-             /usr/local/bin/nscreds /usr/local/bin/ns_login.py \
+             /usr/local/bin/nscreds /usr/local/bin/ns_login.py /usr/local/bin/start_tailnet.sh \
              /usr/local/bin/relink_git.sh
 
 EXPOSE 10000
