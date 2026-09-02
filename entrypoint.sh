@@ -33,7 +33,7 @@ chown -R nico:nico /Users/nico /data 2>/dev/null || true
 # OAuth working before.
 echo ">>> starting the virtual display"
 rm -f /tmp/.X0-lock /tmp/.X11-unix/X0 2>/dev/null || true
-Xvfb :0 -screen 0 ${SCREEN_GEOMETRY:-1280x800x16} -nolisten tcp >/tmp/xvfb.log 2>&1 &
+Xvfb :0 -screen 0 ${SCREEN_GEOMETRY:-1152x720x16} -nolisten tcp >/tmp/xvfb.log 2>&1 &
 for _ in $(seq 1 30); do xdpyinfo -display :0 >/dev/null 2>&1 && break; sleep 0.5; done
 
 # A desktop session, not just a window manager: a panel, a file manager and a menu, so
@@ -47,8 +47,12 @@ sudo -u nico env DISPLAY=:0 HOME=/Users/nico XDG_CURRENT_DESKTOP=XFCE \
 VNC_PW="${VNC_PASSWORD:-$TTYD_PASSWORD}"
 mkdir -p /tmp/vnc
 x11vnc -storepasswd "$(printf '%.8s' "$VNC_PW")" /tmp/vnc/passwd >/dev/null 2>&1
+# -noxdamage was a mistake and made this slower, not faster. It disables the X DAMAGE
+# extension, so x11vnc has to poll the whole screen instead of being told which rectangles
+# changed. DAMAGE is on now. defer and wait are the batching window in milliseconds; short
+# values favour responsiveness, which is what an interactive desktop needs.
 x11vnc -display :0 -forever -shared -rfbauth /tmp/vnc/passwd -quiet -rfbport 5900 \
-       -noxdamage -nolookup -threads -defer 30 -wait 30 >/tmp/x11vnc.log 2>&1 &
+       -nolookup -threads -defer 8 -wait 8 >/tmp/x11vnc.log 2>&1 &
 websockify --web=/usr/share/novnc 6080 127.0.0.1:5900 >/tmp/novnc.log 2>&1 &
 
 # noVNC's landing page asks which client to use; go straight to the desktop instead.
@@ -70,7 +74,7 @@ chmod 644 /tmp/htpasswd
 # time and the platform failed the deploy even though the container was healthy. The
 # health endpoint has to answer within seconds; the restore can finish behind it.
 (
-  sudo -u nico --preserve-env=ANTHROPIC_API_KEY,GH_TOKEN,BACKUP_REPO,DISPLAY,CLAUDE_CREDENTIALS,RESTORE_ON_BOOT \
+  sudo -u nico --preserve-env=ANTHROPIC_API_KEY,GH_TOKEN,GH_TOKEN_NMINDGROUP,BACKUP_REPO,DISPLAY,CLAUDE_CREDENTIALS,RESTORE_ON_BOOT \
        /usr/local/bin/bootstrap.sh 2>&1 | sed 's/^/[bootstrap] /'
   echo "[bootstrap] finished"
   touch /tmp/.bootstrap-done
@@ -80,7 +84,7 @@ chmod 644 /tmp/htpasswd
 # ttyd on a private port; nginx owns the public one and routes to ttyd and noVNC.
 ttyd -p 7681 -i 127.0.0.1 -W \
      -t 'titleFixed=claude-iphone' -t 'fontSize=14' \
-     sudo -u nico --preserve-env=ANTHROPIC_API_KEY,GH_TOKEN,BACKUP_REPO,DISPLAY \
+     sudo -u nico --preserve-env=ANTHROPIC_API_KEY,GH_TOKEN,GH_TOKEN_NMINDGROUP,BACKUP_REPO,DISPLAY \
           -i tmux new-session -A -s main >/tmp/ttyd.log 2>&1 &
 
 sed "s/__PORT__/${PORT:-10000}/" /etc/nginx/nginx.conf.template > /tmp/nginx.conf

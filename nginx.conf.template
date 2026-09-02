@@ -61,7 +61,7 @@ http {
     # noVNC guesses its websocket URL and the guess is wrong behind a sub-path, which
     # shows up as a viewer that takes an age to appear and then retries.
     location = /vnc/ {
-      return 302 /vnc/vnc.html?autoconnect=1&resize=scale&reconnect=1&path=vnc/websockify&quality=4&compression=9;
+      return 302 /vnc/vnc.html?autoconnect=1&resize=scale&reconnect=1&path=vnc/websockify&quality=6&compression=2;
     }
 
     # The websocket, at the path noVNC actually asks for when served under /vnc/.
