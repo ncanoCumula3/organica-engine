@@ -1,0 +1,113 @@
+# One port in, two things out. Render exposes a single port, so nginx routes:
+#   /      the terminal   (ttyd -> tmux -> claude)
+#   /vnc/  the desktop    (noVNC -> x11vnc -> Xvfb, where the browser window appears)
+# Both sit behind the same basic auth, so the desktop is never open to the internet.
+worker_processes 1;
+error_log /dev/stderr warn;
+pid /tmp/nginx.pid;
+events { worker_connections 512; }
+
+http {
+  include       /etc/nginx/mime.types;
+  access_log    off;
+  sendfile      on;
+  client_max_body_size 512m;
+  proxy_read_timeout    86400s;   # a tmux session left open must not be cut
+  proxy_send_timeout    86400s;
+  map $http_upgrade $connection_upgrade { default upgrade; '' close; }
+
+  server {
+    listen __PORT__;
+    server_name _;
+
+    # Redirects must stay relative. nginx otherwise rebuilds them from its own listen
+    # address and sends the browser to http://host:10000/..., which is the internal port
+    # and the wrong scheme, so the page simply hangs. That was the whole reason the
+    # desktop appeared to take forever to load.
+    absolute_redirect off;
+    port_in_redirect  off;
+
+    auth_basic           "claude-iphone";
+    auth_basic_user_file /tmp/htpasswd;
+
+    # The platform health check must not need credentials, or the deploy never goes live.
+    location = /healthz {
+      auth_basic off;
+      default_type text/plain;
+      return 200 "ok\n";
+    }
+
+    # Whether first-boot setup has finished. The launcher polls this so you can tell the
+    # difference between "still restoring the workspace" and "something is wrong".
+    location = /ready {
+      auth_basic off;
+      default_type text/plain;
+      if (-f /tmp/.bootstrap-done) { return 200 "ready\n"; }
+      return 202 "setting up\n";
+    }
+
+    # The phone launcher. Add this to the Home Screen and it opens full screen with no
+    # browser chrome, which is the only thing an app would have given us.
+    location /app/ {
+      alias /usr/share/claude-phone/;
+      index index.html;
+      add_header Cache-Control "no-cache";
+      types { text/html html; application/manifest+json webmanifest; image/png png; }
+    }
+    location = /app { return 302 /app/; }
+
+    # Land on a configured viewer rather than noVNC's chooser: connect straight away,
+    # scale to the phone screen, and lean on compression. Without the explicit path,
+    # noVNC guesses its websocket URL and the guess is wrong behind a sub-path, which
+    # shows up as a viewer that takes an age to appear and then retries.
+    location = /vnc/ {
+      return 302 /vnc/vnc.html?autoconnect=1&resize=scale&reconnect=1&path=vnc/websockify&quality=4&compression=9;
+    }
+
+    # The websocket, at the path noVNC actually asks for when served under /vnc/.
+    #
+    # auth_basic is OFF here on purpose, and it is not a hole. A browser cannot attach
+    # basic-auth credentials to a WebSocket handshake: the WebSocket API has no way to set
+    # headers, and stored credentials are not replayed on the upgrade. Leaving auth_basic
+    # on meant the browser was refused and sat on "Connecting..." for ever. The socket is
+    # protected by the VNC password on x11vnc instead, which noVNC does know how to send.
+    location /vnc/websockify {
+      auth_basic off;
+      proxy_pass http://127.0.0.1:6080/websockify;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_set_header Host $host;
+      proxy_buffering off;
+    }
+
+    # and at the bare path, for a client that guesses the other way
+    location /websockify {
+      auth_basic off;
+      proxy_pass http://127.0.0.1:6080/websockify;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_set_header Host $host;
+      proxy_buffering off;
+    }
+
+    # the noVNC static files
+    location /vnc/ {
+      proxy_pass http://127.0.0.1:6080/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_set_header Host $host;
+    }
+
+    # the terminal
+    location / {
+      proxy_pass http://127.0.0.1:7681/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_set_header Host $host;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Workstation</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Workstation">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#12303f">
+<style>
+  :root { --navy:#12303f; --amber:#ffb700; --ink:#e8eef2; --mut:#7d95a3; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; height:100%; background:var(--navy); color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; }
+  body { display:flex; flex-direction:column; padding:
+    calc(env(safe-area-inset-top) + 22px) 20px calc(env(safe-area-inset-bottom) + 20px); }
+  h1 { font-size:21px; margin:0 0 2px; font-weight:650; letter-spacing:-.01em; }
+  .sub { color:var(--mut); font-size:13px; margin-bottom:22px; }
+  a.card { display:block; text-decoration:none; color:var(--ink); background:#193d4f;
+    border:1px solid #24506610; border-radius:14px; padding:17px 18px; margin-bottom:12px;
+    transition:transform .08s ease, background .15s ease; }
+  a.card:active { transform:scale(.985); background:#1f4a5f; }
+  a.card .t { font-size:17px; font-weight:650; display:flex; align-items:center; gap:10px; }
+  a.card .d { color:var(--mut); font-size:13px; margin-top:3px; }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--amber); flex:none; }
+  .status { margin-top:auto; padding-top:18px; border-top:1px solid #21485c;
+    color:var(--mut); font-size:12px; }
+  .status b { color:var(--ink); font-weight:600; }
+  #st { color:var(--amber); }
+  code { background:#0d2029; padding:2px 6px; border-radius:5px; font-size:12px; color:#cfe3ee; }
+</style>
+</head>
+<body>
+  <h1>Workstation</h1>
+  <div class="sub">Same machine as the laptop, running remotely.</div>
+
+  <a class="card" href="/"><div class="t"><span class="dot"></span>Terminal</div>
+    <div class="d">Claude Code, tmux. Closing this does not lose your place.</div></a>
+
+  <a class="card" href="/vnc/"><div class="t"><span class="dot"></span>Desktop</div>
+    <div class="d">Chrome, for NetSuite sign-in and anything that needs a browser.</div></a>
+
+  <div class="status">
+    Service <b id="st">checking…</b><br>
+    Add to Home Screen for full screen. Sign-in is remembered per session.<br>
+    Terminal tip: <code>claude --resume</code> reopens a past session.
+  </div>
+
+<script>
+  // /ready is 202 while the first boot is still restoring the workspace, 200 after.
+  // Without this you cannot tell "still setting up" from "broken".
+  function poll() {
+    fetch('/ready', {cache:'no-store'})
+      .then(r => {
+        const el = document.getElementById('st');
+        if (r.status === 200) { el.textContent = 'ready'; return; }
+        el.textContent = 'setting up, first boot only';
+        setTimeout(poll, 5000);
+      })
+      .catch(() => document.getElementById('st').textContent = 'unreachable');
+  }
+  poll();
+</script>
+</body>
+</html>

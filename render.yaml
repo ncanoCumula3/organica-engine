@@ -1,0 +1,47 @@
+# Render Blueprint — deploys claude-iphone as a Web Service.
+# To use: in Render, "New +" → "Blueprint" → connect ncanoCumula3/claude-iphone on
+# branch `main`. The deploy config lives at the root of that repository.
+services:
+  - type: web
+    name: claude-iphone
+    runtime: docker
+    plan: standard            # 2 GB RAM, always-on. Pro for 4GB if it ever needs it.
+    region: oregon            # change if you prefer
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+
+    # Persistent disk holds memories, tool creds, NetSuite SDF projects, etc.
+    disk:
+      name: claude-state
+      mountPath: /data
+      sizeGB: 20        # the restored workspace is ~2GB; leaves room to work
+
+    healthCheckPath: /healthz    # unauthenticated; / is behind basic auth
+
+    envVars:
+      # Set these in the Render dashboard after first deploy:
+      - key: TTYD_USER          # username for the web terminal (e.g. nico)
+        sync: false
+      - key: TTYD_PASSWORD      # strong password — terminal is internet-exposed
+        sync: false
+      - key: ANTHROPIC_API_KEY  # optional: lets claude run without `claude login`
+        sync: false
+      # GH_TOKEN is now REQUIRED, not optional: it is how the container pulls the
+      # workspace backup on first boot. Needs read access to ncanoCumula3/jerue releases.
+      - key: GH_TOKEN
+        sync: false
+      - key: BACKUP_REPO        # where the backup releases live
+        value: ncanoCumula3/jerue
+      # NetSuite TBA tokens — copy from ~/claude/jerure/tools/.env (sandbox)
+      # and ~/claude/jerure/tools/.jer-prod.env (prod):
+      - key: NS_ACCOUNT_ID
+        sync: false
+      - key: NS_CONSUMER_KEY
+        sync: false
+      - key: NS_CONSUMER_SECRET
+        sync: false
+      - key: NS_TOKEN_ID
+        sync: false
+      - key: NS_TOKEN_SECRET
+        sync: false

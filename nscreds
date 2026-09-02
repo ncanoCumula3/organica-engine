@@ -1,0 +1,214 @@
+#!/usr/bin/env python3
+"""NetSuite credentials for this machine, in one file.
+
+The file is ~/.netsuite/accounts.json, mode 600, and it lives on the persistent disk, so
+it survives container restarts and is never part of any repository or backup archive.
+
+There are two ways into NetSuite and this covers both.
+
+    Token auth   SuiteQL, RESTlets and anything scripted. Needs the four TBA values.
+                 This is the dominant path and it never opens a browser.
+    Browser      The NetSuite UI, and the OAuth step of `suitecloud account:setup`.
+                 Chrome's own profile is on the persistent disk, so once you have signed
+                 in through the desktop, Chrome remembers it. The email and password kept
+                 here are a fallback for when the saved session has expired.
+
+    nscreds list                  every account, secrets masked
+    nscreds show jer-sb1          one account, secrets masked
+    nscreds env jer-sb1           shell exports for the token values
+    nscreds use jer-sb1           make it the default for new shells
+    nscreds set jer-sb1 NS_TOKEN_ID=abc123 ui_email=me@x.com
+    nscreds add jer-prod --account-id 7082070 --label "Jerue production"
+    nscreds import ~/netsuite/acct-7082070-prod/.env --as jer-prod
+    nscreds check                 which accounts are complete enough to use
+
+Nothing here prints a secret unless you ask for `env`, which is meant to be eval'd:
+
+    eval "$(nscreds env jer-sb1)"
+"""
+import argparse
+import json
+import os
+import re
+import stat
+import sys
+
+STORE = os.path.expanduser("~/.netsuite/accounts.json")
+TOKEN_KEYS = ["NS_ACCOUNT_ID", "NS_REALM", "NS_HOST",
+              "NS_CONSUMER_KEY", "NS_CONSUMER_SECRET", "NS_TOKEN_ID", "NS_TOKEN_SECRET"]
+SECRET_KEYS = {"NS_CONSUMER_SECRET", "NS_TOKEN_SECRET", "NS_CONSUMER_KEY", "NS_TOKEN_ID",
+               "ui_password"}
+REQUIRED_FOR_TOKEN = ["NS_ACCOUNT_ID", "NS_CONSUMER_KEY", "NS_CONSUMER_SECRET",
+                      "NS_TOKEN_ID", "NS_TOKEN_SECRET"]
+
+
+def load() -> dict:
+    if not os.path.exists(STORE):
+        return {"default": None, "accounts": {}}
+    with open(STORE) as fh:
+        return json.load(fh)
+
+
+def save(doc: dict) -> None:
+    """effects: writes the store readable only by its owner, creating the directory."""
+    os.makedirs(os.path.dirname(STORE), exist_ok=True)
+    tmp = STORE + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump(doc, fh, indent=2, sort_keys=True)
+    os.chmod(tmp, stat.S_IRUSR | stat.S_IWUSR)          # 600, before it is in place
+    os.replace(tmp, STORE)
+
+
+def mask(key: str, value) -> str:
+    if value in (None, ""):
+        return "—"
+    v = str(value)
+    if key in SECRET_KEYS or "SECRET" in key.upper() or "PASSWORD" in key.upper():
+        return v[:3] + "…" + v[-2:] if len(v) > 8 else "…"
+    return v
+
+
+def cmd_list(doc, args):
+    accts = doc.get("accounts", {})
+    if not accts:
+        print("no accounts yet.  nscreds add <name> --account-id 1234567")
+        return 0
+    default = doc.get("default")
+    print(f"{'':2}{'name':<14}{'account':<14}{'label':<26}{'token':<8}{'ui'}")
+    for name, a in sorted(accts.items()):
+        star = "*" if name == default else " "
+        tok = "yes" if all(a.get(k) for k in REQUIRED_FOR_TOKEN) else "no"
+        ui = "yes" if a.get("ui_email") else "no"
+        print(f"{star} {name:<14}{str(a.get('NS_ACCOUNT_ID','—')):<14}"
+              f"{str(a.get('label',''))[:24]:<26}{tok:<8}{ui}")
+    if default:
+        print(f"\n* default. New shells export it automatically.")
+    return 0
+
+
+def cmd_show(doc, args):
+    a = doc["accounts"].get(args.name)
+    if not a:
+        print(f"no account named {args.name!r}", file=sys.stderr); return 1
+    for k in TOKEN_KEYS + ["label", "role", "authid", "ui_email", "ui_password", "note"]:
+        if k in a:
+            print(f"  {k:<20} {mask(k, a[k])}")
+    return 0
+
+
+def cmd_env(doc, args):
+    name = args.name or doc.get("default")
+    a = doc["accounts"].get(name or "")
+    if not a:
+        print(f"no account named {name!r}", file=sys.stderr); return 1
+    for k in TOKEN_KEYS:
+        if a.get(k):
+            print(f"export {k}={json.dumps(str(a[k]))}")
+    print(f"export NS_ACCOUNT_NAME={json.dumps(name)}")
+    return 0
+
+
+def cmd_use(doc, args):
+    if args.name not in doc["accounts"]:
+        print(f"no account named {args.name!r}", file=sys.stderr); return 1
+    doc["default"] = args.name
+    save(doc)
+    print(f"default is now {args.name}. New shells pick it up; for this one:")
+    print(f'  eval "$(nscreds env)"')
+    return 0
+
+
+def cmd_add(doc, args):
+    a = doc["accounts"].setdefault(args.name, {})
+    if args.account_id:
+        a["NS_ACCOUNT_ID"] = args.account_id
+        a.setdefault("NS_REALM", args.account_id.upper().replace("-", "_"))
+        host = args.account_id.lower().replace("_", "-")
+        a.setdefault("NS_HOST", f"https://{host}.suitetalk.api.netsuite.com")
+    if args.label:
+        a["label"] = args.label
+    doc["accounts"][args.name] = a
+    if not doc.get("default"):
+        doc["default"] = args.name
+    save(doc)
+    print(f"added {args.name}. Fill it in with:")
+    print(f"  nscreds set {args.name} NS_CONSUMER_KEY=… NS_CONSUMER_SECRET=… "
+          f"NS_TOKEN_ID=… NS_TOKEN_SECRET=…")
+    return 0
+
+
+def cmd_set(doc, args):
+    a = doc["accounts"].setdefault(args.name, {})
+    for pair in args.pairs:
+        if "=" not in pair:
+            print(f"skipping {pair!r}, expected KEY=VALUE", file=sys.stderr); continue
+        k, v = pair.split("=", 1)
+        a[k.strip()] = v
+    save(doc)
+    print(f"updated {args.name}: {', '.join(p.split('=')[0] for p in args.pairs)}")
+    return 0
+
+
+def cmd_import(doc, args):
+    """Read an existing .env and fold it into the store, so nothing is retyped."""
+    if not os.path.exists(args.path):
+        print(f"no such file: {args.path}", file=sys.stderr); return 1
+    a = doc["accounts"].setdefault(args.as_name, {})
+    n = 0
+    for line in open(args.path):
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k = k.strip().lstrip("export ").strip()
+        if re.match(r"^NS_[A-Z_]+$", k):
+            a[k] = v.strip().strip('"').strip("'")
+            n += 1
+    if not doc.get("default"):
+        doc["default"] = args.as_name
+    save(doc)
+    print(f"imported {n} values into {args.as_name} from {args.path}")
+    return 0
+
+
+def cmd_check(doc, args):
+    accts = doc.get("accounts", {})
+    bad = 0
+    for name, a in sorted(accts.items()):
+        missing = [k for k in REQUIRED_FOR_TOKEN if not a.get(k)]
+        if missing:
+            bad += 1
+            print(f"  {name:<14} incomplete: missing {', '.join(missing)}")
+        else:
+            print(f"  {name:<14} token auth ready"
+                  + ("" if a.get("ui_email") else "   (no UI login stored)"))
+    if os.path.exists(STORE):
+        mode = stat.S_IMODE(os.stat(STORE).st_mode)
+        print(f"\n  store {STORE} mode {oct(mode)[-3:]}"
+              + ("" if mode == 0o600 else "   <-- should be 600, run: chmod 600 " + STORE))
+    return 1 if bad else 0
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(prog="nscreds", description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = p.add_subparsers(dest="cmd")
+    sub.add_parser("list")
+    s = sub.add_parser("show");   s.add_argument("name")
+    s = sub.add_parser("env");    s.add_argument("name", nargs="?")
+    s = sub.add_parser("use");    s.add_argument("name")
+    s = sub.add_parser("add");    s.add_argument("name"); s.add_argument("--account-id"); s.add_argument("--label")
+    s = sub.add_parser("set");    s.add_argument("name"); s.add_argument("pairs", nargs="+")
+    s = sub.add_parser("import"); s.add_argument("path"); s.add_argument("--as", dest="as_name", required=True)
+    sub.add_parser("check")
+    args = p.parse_args()
+    if not args.cmd:
+        p.print_help(); return 0
+    doc = load()
+    return {"list": cmd_list, "show": cmd_show, "env": cmd_env, "use": cmd_use,
+            "add": cmd_add, "set": cmd_set, "import": cmd_import,
+            "check": cmd_check}[args.cmd](doc, args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
