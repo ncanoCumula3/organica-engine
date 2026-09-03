@@ -429,6 +429,9 @@ hr{{border-color:{LINE}}}
                         else: st.warning("Query returned no rows.")
                     except Exception as e: st.error(f"NetSuite error: {e}")
         CX.render_panels(st, ss, autoload, show_mapping)
+        st.divider()
+        st.subheader("Data rooms")
+        DR.render_panels(st, ss, autoload, show_mapping)
 
     elif page=="Data":
         st.title("Data")
