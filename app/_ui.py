@@ -7,6 +7,7 @@ import pandas as pd, numpy as np, streamlit as st
 import plotly.express as px, plotly.graph_objects as go
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import analyses as A, store as S, gdrive as G, xls_export as X, auth as AU, cases as C, ai as AI, journeys as J, boardpack as BP, icmemo as IM, docs as DOC, netsuite as NS, provenance as PV, icdeck as ID, portfolio as PF, connectors as CX, comps as CM
+import dataroom as DR
 import credit as CR, icpaper as IPR, holdmonitor as HM, creditrisk as CXR, trace as TR, lenderaudit as LAU
 
 ACCENT="#2C5560"; INK="#1A1A1A"; MUTE="#7A7A75"; CLAY="#9C6B4F"; SAGE="#5E7C6E"; LINE="#E6E3DD"
@@ -430,12 +431,17 @@ hr{{border-color:{LINE}}}
         CX.render_panels(st, ss, autoload, show_mapping)
 
     elif page=="Data":
-        st.title("Data"); tab1,tab2=st.tabs(["Upload a file","Verexa — sample data room"])
+        st.title("Data")
+        tab1,tab3,tab2=st.tabs(["Upload a file","Data-room export (ZIP)","Verexa — sample data room"])
         with tab1:
             up=st.file_uploader("Data-room file — CSV · Excel · PDF", type=["csv","xlsx","xls","pdf"])
             if up is not None:
                 tables=DOC.extract_tables(up.getvalue(), up.name)
-                if not tables:
+                errs=[l for l,d in tables if d is None]
+                tables=[(l,d) for l,d in tables if d is not None]
+                if errs:
+                    st.error(f"That file could not be read — {errs[0]}")
+                elif not tables:
                     st.warning("No analysable tables found in that file.")
                 else:
                     best=DOC.best_table(tables); bi=tables.index(best) if best in tables else 0
@@ -445,6 +451,34 @@ hr{{border-color:{LINE}}}
                     st.dataframe(raw.head(8), use_container_width=True)
                     if st.button("Use this table ▶", type="primary"): autoload(raw)
                     if ss.get("raw") is not None: show_mapping(ss["raw"])
+        with tab3:
+            st.caption("Every data-room provider can export the room as a ZIP, so this route works "
+                       "for all of them without credentials — Datasite, Intralinks, Ansarada, iDeals "
+                       "and the rest keep their APIs behind an enterprise agreement, and this needs none.")
+            zup=st.file_uploader("Data-room export — ZIP of the whole room", type=["zip"], key="zipup")
+            if zup is not None:
+                entries=DR.ingest_archive(zup.getvalue(), zup.name)
+                s_=DR.summarise(entries)
+                st.caption(f"{s_['data_files']} data file(s) · {s_['parsed']} parsed · "
+                           f"{s_['tables']} table(s) found · {s_['skipped']} not data files")
+                choices=[(f"{e['path']}  ·  {l}  ·  {d.shape[0]}×{d.shape[1]}", d)
+                         for e in entries for l,d in e["tables"]]
+                if not choices:
+                    st.warning("No analysable tables found in that export.")
+                    st.dataframe(pd.DataFrame([{"file":e["path"],"note":e["note"]} for e in entries]),
+                                 use_container_width=True, hide_index=True)
+                else:
+                    pick=st.selectbox(f"{len(choices)} table(s) across the room", [c[0] for c in choices])
+                    raw=dict(choices)[pick]
+                    st.dataframe(raw.head(8), use_container_width=True)
+                    if st.button("Use this table ▶", type="primary", key="zipuse"): autoload(raw)
+                    with st.expander("Everything found in the export"):
+                        st.dataframe(pd.DataFrame([{"file":e["path"],"type":e["kind"],
+                                                    "tables":len(e["tables"]),"note":e["note"]}
+                                                   for e in entries]),
+                                     use_container_width=True, hide_index=True)
+                    if ss.get("raw") is not None: show_mapping(ss["raw"])
+
         with tab2:
             st.caption("**Verexa Software** — a €13.6m-ARR vertical-SaaS company, PE-owned, preparing a refinancing. Real-world book (anonymised & de-referenced): customers, a 15-month MRR time-series, and 3 years of quarterly P&L.")
             if st.button("Load sample book",type="primary"):

@@ -2,6 +2,7 @@ streamlit>=1.36
 pandas>=2.0
 numpy>=1.26
 openpyxl>=3.1
+xlrd>=2.0            # legacy .xls; the uploader offers it and pandas needs this to read it
 plotly>=5.20
 lxml>=5.0
 google-api-python-client>=2.120
