@@ -274,9 +274,12 @@ hr{{border-color:{LINE}}}
     #   get the data in -> understand it -> ask it something -> produce the paper ->
     #   make the decision -> live with it -> take it away.
     NAV=["Connect data","Data","Dashboard","Analyses","Deliverability",
-         "Business cases","Ask","IC paper"]
+         "Business cases","Ask","IC paper","Monitoring"]
+    # Monitoring is not an admin page. The strapline directly under this navigation promises
+    # DATA · UNDERSTAND · DECIDE · MONITOR to everyone, and it was gated behind the admin role,
+    # so every viewer was told the product monitors and then shown no way to reach it.
     if ss.get("role")=="admin":
-        NAV=NAV+["Audit","Monitoring","Portfolio","Journeys"]
+        NAV=NAV+["Audit","Portfolio","Journeys"]
     NAV=NAV+["Export"]
     page=st.sidebar.radio("Navigation", NAV, label_visibility="collapsed")
     st.sidebar.markdown(f"<div style='color:{MUTE};font-size:10px;letter-spacing:.08em;"
