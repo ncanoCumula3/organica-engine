@@ -1,0 +1,20 @@
+# Render blueprint — Organica (one service = one tenant; clone the service per client).
+# Deploy: Render Dashboard → New → Blueprint → point at this repo, OR via the API.
+services:
+  - type: web
+    name: organica
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app/app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true --browser.gatherUsageStats false
+    healthCheckPath: /_stcore/health
+    autoDeploy: true
+    envVars:
+      - key: ORGANICA_DATA
+        value: /data
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+    disk:
+      name: organica-data
+      mountPath: /data
+      sizeGB: 1

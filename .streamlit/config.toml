@@ -1,0 +1,21 @@
+[theme]
+primaryColor="#2C5560"
+backgroundColor="#FCFBF8"
+secondaryBackgroundColor="#F7F6F2"
+textColor="#1A1A1A"
+font="sans serif"
+base="light"
+[server]
+headless=true
+maxUploadSize=50
+[browser]
+gatherUsageStats=false
+[client]
+# Streamlit prints a full stack trace into the page on an unhandled exception. A trace
+# from the reasoning client carries the host it called, so the page would disclose the
+# supplier at exactly the moment something goes wrong in front of a prospect. Errors are
+# caught and rendered as one neutral sentence by the app; anything that escapes that shows
+# as a generic message and the detail goes to the server log only.
+showErrorDetails="none"
+# Hide the developer toolbar (rerun, clear cache, "Deploy"), which is not for a client.
+toolbarMode="minimal"
