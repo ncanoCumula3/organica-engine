@@ -1,0 +1,16 @@
+company,segment,ev_revenue,ev_ebitda,ebitda_margin,rev_growth,nrr,rule_of_40
+Veeva Systems,Vertical SaaS - Life sciences,13,32,38,16,110,54
+Tyler Technologies,Vertical SaaS - Public sector,11,38,26,9,108,35
+Procore,Vertical SaaS - Construction,8,55,12,20,105,32
+ServiceTitan,Vertical SaaS - Field services,9,60,10,24,110,34
+Toast,Vertical SaaS - Restaurants,4,40,8,28,110,36
+Guidewire,Vertical SaaS - Insurance,12,45,22,18,115,40
+Bentley Systems,Vertical SaaS - Infrastructure,11,30,34,11,108,45
+Descartes Systems,Vertical SaaS - Logistics,14,32,42,14,107,56
+Manhattan Associates,Vertical SaaS - Supply chain,12,35,33,15,106,48
+AppFolio,Vertical SaaS - Property mgmt,11,40,24,28,108,52
+Q2 Holdings,Vertical SaaS - Banking,6,45,16,12,110,28
+Vertex,Vertical SaaS - Tax,7,30,28,13,109,41
+Workiva,Vertical SaaS - Compliance,8,50,12,18,110,30
+Paycom,Vertical SaaS - HR/payroll,9,22,42,11,105,53
+Intapp,Vertical SaaS - Professional svcs,8,48,15,22,115,37
