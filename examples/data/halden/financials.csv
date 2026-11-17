@@ -1,0 +1,122 @@
+statement,line_item,period,value
+P&L,"Revenue, recurring",2024Q1,13900000
+P&L,"Revenue, one-off hardware and services",2024Q1,200000
+P&L,COGS,2024Q1,1170500
+P&L,Sales & marketing,2024Q1,3266500
+P&L,R&D,2024Q1,5977000
+P&L,G&A,2024Q1,2849500
+P&L,Capex,2024Q1,282000
+BS,Cash,2024Q1,28100000
+BS,Accounts receivable,2024Q1,12408000
+BS,Inventory,2024Q1,60000
+BS,Accounts payable,2024Q1,585250
+P&L,"Revenue, recurring",2024Q2,14200000
+P&L,"Revenue, one-off hardware and services",2024Q2,200000
+P&L,COGS,2024Q2,1193000
+P&L,Sales & marketing,2024Q2,3337000
+P&L,R&D,2024Q2,6106000
+P&L,G&A,2024Q2,2911000
+P&L,Capex,2024Q2,288000
+BS,Cash,2024Q2,27400000
+BS,Accounts receivable,2024Q2,6048000
+BS,Inventory,2024Q2,60000
+BS,Accounts payable,2024Q2,596500
+P&L,"Revenue, recurring",2024Q3,14500000
+P&L,"Revenue, one-off hardware and services",2024Q3,300000
+P&L,COGS,2024Q3,1279500
+P&L,Sales & marketing,2024Q3,3407500
+P&L,R&D,2024Q3,6235000
+P&L,G&A,2024Q3,2972500
+P&L,Capex,2024Q3,296000
+BS,Cash,2024Q3,26900000
+BS,Accounts receivable,2024Q3,6216000
+BS,Inventory,2024Q3,90000
+BS,Accounts payable,2024Q3,639750
+P&L,"Revenue, recurring",2024Q4,14800000
+P&L,"Revenue, one-off hardware and services",2024Q4,200000
+P&L,COGS,2024Q4,1238000
+P&L,Sales & marketing,2024Q4,3478000
+P&L,R&D,2024Q4,6364000
+P&L,G&A,2024Q4,3034000
+P&L,Capex,2024Q4,300000
+BS,Cash,2024Q4,29600000
+BS,Accounts receivable,2024Q4,6300000
+BS,Inventory,2024Q4,60000
+BS,Accounts payable,2024Q4,619000
+P&L,"Revenue, recurring",2025Q1,14600000
+P&L,"Revenue, one-off hardware and services",2025Q1,300000
+P&L,COGS,2025Q1,1287000
+P&L,Sales & marketing,2025Q1,3431000
+P&L,R&D,2025Q1,6278000
+P&L,G&A,2025Q1,2643000
+P&L,Capex,2025Q1,298000
+BS,Cash,2025Q1,41900000
+BS,Accounts receivable,2025Q1,13112000
+BS,Inventory,2025Q1,90000
+BS,Accounts payable,2025Q1,643500
+P&L,"Revenue, recurring",2025Q2,14400000
+P&L,"Revenue, one-off hardware and services",2025Q2,2300000
+P&L,COGS,2025Q2,2552000
+P&L,Sales & marketing,2025Q2,3384000
+P&L,R&D,2025Q2,6192000
+P&L,G&A,2025Q2,2602000
+P&L,Capex,2025Q2,334000
+BS,Cash,2025Q2,36200000
+BS,Accounts receivable,2025Q2,7014000
+BS,Inventory,2025Q2,690000
+BS,Accounts payable,2025Q2,1276000
+P&L,"Revenue, recurring",2025Q3,14300000
+P&L,"Revenue, one-off hardware and services",2025Q3,1900000
+P&L,COGS,2025Q3,2288500
+P&L,Sales & marketing,2025Q3,3360500
+P&L,R&D,2025Q3,6149000
+P&L,G&A,2025Q3,2581500
+P&L,Capex,2025Q3,324000
+BS,Cash,2025Q3,33000000
+BS,Accounts receivable,2025Q3,6804000
+BS,Inventory,2025Q3,570000
+BS,Accounts payable,2025Q3,1144250
+P&L,"Revenue, recurring",2025Q4,14100000
+P&L,"Revenue, one-off hardware and services",2025Q4,2000000
+P&L,COGS,2025Q4,2337500
+P&L,Sales & marketing,2025Q4,3313500
+P&L,R&D,2025Q4,6063000
+P&L,G&A,2025Q4,2440500
+P&L,Capex,2025Q4,322000
+BS,Cash,2025Q4,35800000
+BS,Accounts receivable,2025Q4,6762000
+BS,Inventory,2025Q4,600000
+BS,Accounts payable,2025Q4,1168750
+P&L,"Revenue, recurring",2026Q1,14000000
+P&L,"Revenue, one-off hardware and services",2026Q1,300000
+P&L,COGS,2026Q1,1242000
+P&L,Sales & marketing,2026Q1,3290000
+P&L,R&D,2026Q1,6020000
+P&L,G&A,2026Q1,2870000
+P&L,Capex,2026Q1,286000
+BS,Cash,2026Q1,41400000
+BS,Accounts receivable,2026Q1,12584000
+BS,Inventory,2026Q1,90000
+BS,Accounts payable,2026Q1,621000
+P&L,"Revenue, recurring",2026Q2,14100000
+P&L,"Revenue, one-off hardware and services",2026Q2,200000
+P&L,COGS,2026Q2,1185500
+P&L,Sales & marketing,2026Q2,3313500
+P&L,R&D,2026Q2,6063000
+P&L,G&A,2026Q2,2890500
+P&L,Capex,2026Q2,286000
+BS,Cash,2026Q2,35100000
+BS,Accounts receivable,2026Q2,6006000
+BS,Inventory,2026Q2,60000
+BS,Accounts payable,2026Q2,592750
+P&L,"Revenue, recurring",2026Q3,14200000
+P&L,"Revenue, one-off hardware and services",2026Q3,200000
+P&L,COGS,2026Q3,1193000
+P&L,Sales & marketing,2026Q3,3337000
+P&L,R&D,2026Q3,6106000
+P&L,G&A,2026Q3,2911000
+P&L,Capex,2026Q3,288000
+BS,Cash,2026Q3,31000000
+BS,Accounts receivable,2026Q3,6048000
+BS,Inventory,2026Q3,60000
+BS,Accounts payable,2026Q3,596500

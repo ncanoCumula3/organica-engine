@@ -1,0 +1,215 @@
+customer,mrr_eur,usage_gb,tier,vertical,region
+Ulver Mobility,70666.64,11010.6,Enterprise,Retail and consumer,DACH
+Tamar Re,55772.72,8288.4,Enterprise,Financial services,UK and Ireland
+Dunmore Stores,108333.33,9506.9,Enterprise,Public sector,Nordics
+Pellam Markets,53298.1,4670.6,Enterprise,Retail and consumer,DACH
+Ulver Capital,116666.67,11021.8,Enterprise,Public sector,DACH
+Yarrow Media,44956.78,9551.2,Enterprise,Manufacturing,DACH
+Yarrow Motors,216666.67,6210.6,Enterprise,Financial services,North America
+Orrin Logistics,50191.03,11761.7,Enterprise,Financial services,UK and Ireland
+Baltic Health,47253.5,10870.9,Enterprise,Financial services,DACH
+Pellam Mobility,700000.0,18925.4,Enterprise,Financial services,UK and Ireland
+Rathe Pharma,158333.33,7605.5,Enterprise,Public sector,DACH
+Tamar Bank,56352.72,7249.9,Enterprise,Manufacturing,DACH
+Kestrel Stores,37145.7,6124.3,Enterprise,Retail and consumer,Nordics
+Juno Systems,48188.22,9534.4,Enterprise,Telecoms and media,North America
+Yarrow Industries,45345.84,12527.9,Enterprise,Energy,DACH
+Yarrow Health,60057.79,8441.2,Enterprise,Manufacturing,DACH
+Ulver Industries,44798.0,9180.6,Enterprise,Public sector,DACH
+Hollin Partners,74240.75,8382.7,Enterprise,Energy,Nordics
+Baltic Group,125000.0,3313.4,Enterprise,Energy,DACH
+Rathe Markets,67342.61,9789.5,Enterprise,Public sector,DACH
+Isar Insurance,35962.87,11983.7,Enterprise,Healthcare,UK and Ireland
+Alder Group,258333.33,10629.3,Enterprise,Financial services,DACH
+Isar Bank,183333.33,9361.5,Enterprise,Manufacturing,DACH
+Yarrow Group,63449.13,11409.1,Enterprise,Retail and consumer,DACH
+Baltic Retail,100000.0,6853.2,Enterprise,Healthcare,DACH
+Elvan Stores,141666.67,14114.2,Enterprise,Telecoms and media,North America
+Kestrel Group,35599.15,11578.3,Enterprise,Healthcare,DACH
+Orrin Industries,51987.65,14641.6,Enterprise,Financial services,DACH
+Fenwick Motors,770.18,9286.4,Enterprise,Retail and consumer,DACH
+Baltic Labs,38602.97,10737.0,Enterprise,Manufacturing,DACH
+Dunmore Foods,19964.24,2504.5,Scale,Retail and consumer,DACH
+Ulver Systems,24608.15,549.9,Scale,Financial services,Nordics
+Alder Insurance,23855.49,3455.2,Scale,Financial services,DACH
+Isar Mobility,37417.27,3276.2,Scale,Manufacturing,North America
+Nordvik Insurance,28463.85,1985.1,Scale,Financial services,Benelux
+Linden Holdings,12534.49,2211.7,Scale,Healthcare,Rest of world
+Tamar Group,32187.35,3573.6,Scale,Financial services,UK and Ireland
+Nordvik Foods,23929.5,2414.2,Scale,Retail and consumer,DACH
+Alder Pharma,21599.56,3631.6,Scale,Financial services,DACH
+Ulver Re,19423.73,2841.8,Scale,Financial services,Nordics
+Pellam Re,8138.56,2669.2,Scale,Financial services,North America
+Hollin Mobility,14702.57,2632.8,Scale,Financial services,DACH
+Isar Health,20420.87,3315.6,Scale,Manufacturing,DACH
+Orrin Pharma,19356.84,3386.2,Scale,Manufacturing,DACH
+Marlow Systems,19051.45,2036.4,Scale,Financial services,DACH
+Nordvik Systems,10824.63,2090.4,Scale,Retail and consumer,DACH
+Rathe Media,21237.91,1943.1,Scale,Telecoms and media,North America
+Garnet Pharma,17227.76,3996.1,Scale,Financial services,DACH
+Ulver Retail,33292.13,3292.6,Scale,Other,DACH
+Alder Labs,33626.98,3194.4,Scale,Telecoms and media,DACH
+Linden Stores,10702.98,1389.2,Scale,Other,DACH
+Kestrel Re,21154.35,2355.0,Scale,Financial services,DACH
+Varley Labs,19833.96,4593.2,Scale,Financial services,North America
+Carrow Logistics,8388.44,935.4,Scale,Financial services,DACH
+Wexley Energy,19160.9,1445.3,Scale,Financial services,DACH
+Dunmore Labs,18837.87,2291.3,Scale,Telecoms and media,Rest of world
+Quorn Re,17639.85,3474.3,Scale,Retail and consumer,North America
+Dunmore Holdings,26668.42,2832.0,Scale,Financial services,DACH
+Orrin Networks,35278.05,2652.3,Scale,Retail and consumer,DACH
+Garnet Telecom,14014.98,3052.6,Scale,Retail and consumer,DACH
+Ulver Payments,17762.9,3331.9,Scale,Healthcare,Benelux
+Baltic Energy,18926.08,4058.1,Scale,Financial services,Benelux
+Hollin Energy,30450.55,2005.6,Scale,Manufacturing,Nordics
+Elvan Labs,23039.18,2781.4,Scale,Financial services,North America
+Nordvik Networks,12192.92,2051.1,Scale,Retail and consumer,Benelux
+Ulver Stores,17615.45,2295.9,Scale,Energy,North America
+Dunmore Group,10947.02,4040.9,Scale,Manufacturing,DACH
+Orrin Foods,21839.9,1463.5,Scale,Financial services,Nordics
+Pellam Energy,23290.47,20.0,Scale,Public sector,DACH
+Hollin Capital,21752.19,2393.3,Scale,Financial services,Nordics
+Juno Partners,17654.58,1619.3,Scale,Healthcare,DACH
+Linden Motors,30573.36,4290.6,Scale,Financial services,Benelux
+Garnet Stores,20404.89,4430.7,Scale,Healthcare,DACH
+Ulver Group,13450.11,2053.0,Scale,Manufacturing,DACH
+Elvan Logistics,22171.71,1837.2,Scale,Financial services,North America
+Nordvik Re,31632.79,2395.5,Scale,Manufacturing,DACH
+Hollin Networks,21637.2,1682.6,Scale,Healthcare,UK and Ireland
+Varley Motors,18458.78,2055.1,Scale,Retail and consumer,DACH
+Isar Group,22557.38,628.7,Scale,Telecoms and media,DACH
+Ulver Motors,28933.99,2340.8,Scale,Energy,UK and Ireland
+Juno Bank,20023.31,1589.4,Scale,Manufacturing,DACH
+Linden Bank,23111.26,3030.0,Scale,Public sector,Benelux
+Wexley Motors,13129.52,2512.4,Scale,Financial services,North America
+Quorn Industries,16149.89,3047.2,Scale,Financial services,North America
+Alder Telecom,22375.34,3925.1,Scale,Retail and consumer,UK and Ireland
+Orrin Markets,4013.92,723.3,Growth,Financial services,DACH
+Sorrel Motors,6930.84,879.0,Growth,Public sector,Rest of world
+Varley Mobility,6236.43,731.7,Growth,Retail and consumer,DACH
+Yarrow Holdings,3698.57,815.8,Growth,Financial services,Benelux
+Tamar Partners,5039.14,544.1,Growth,Financial services,DACH
+Fenwick Networks,5569.25,510.3,Growth,Retail and consumer,DACH
+Sorrel Mobility,5468.43,539.0,Growth,Financial services,Benelux
+Wexley Labs,5129.43,798.0,Growth,Healthcare,DACH
+Carrow Mobility,1589.9,747.2,Growth,Financial services,North America
+Fenwick Pharma,2627.46,734.6,Growth,Financial services,UK and Ireland
+Elvan Re,7659.18,807.3,Growth,Healthcare,Nordics
+Elvan Media,3244.37,741.6,Growth,Financial services,North America
+Nordvik Labs,7224.37,669.3,Growth,Financial services,DACH
+Carrow Retail,3929.97,490.3,Growth,Telecoms and media,DACH
+Hollin Motors,6339.38,428.5,Growth,Other,DACH
+Varley Systems,8479.82,431.5,Growth,Telecoms and media,North America
+Baltic Industries,3498.7,230.1,Growth,Public sector,North America
+Hollin Health,7361.09,535.1,Growth,Telecoms and media,North America
+Quorn Stores,5522.18,430.7,Growth,Financial services,DACH
+Alder Holdings,7824.78,607.9,Growth,Manufacturing,Benelux
+Kestrel Retail,5896.58,368.7,Growth,Manufacturing,DACH
+Yarrow Capital,9235.55,916.6,Growth,Healthcare,DACH
+Yarrow Payments,6908.26,598.2,Growth,Healthcare,UK and Ireland
+Varley Capital,5309.88,369.0,Growth,Healthcare,DACH
+Tamar Logistics,8997.24,906.4,Growth,Other,UK and Ireland
+Fenwick Partners,2650.3,236.4,Growth,Energy,UK and Ireland
+Orrin Health,2419.45,827.4,Growth,Manufacturing,DACH
+Nordvik Holdings,3098.17,1427.0,Growth,Financial services,DACH
+Elvan Energy,1460.93,741.4,Growth,Financial services,Benelux
+Linden Media,4683.09,957.4,Growth,Manufacturing,Rest of world
+Yarrow Foods,5076.89,804.6,Growth,Telecoms and media,DACH
+Linden Insurance,4879.44,624.1,Growth,Telecoms and media,DACH
+Baltic Markets,5241.87,509.5,Growth,Energy,DACH
+Fenwick Group,5700.21,527.9,Growth,Financial services,Benelux
+Tamar Payments,7744.86,612.9,Growth,Retail and consumer,Nordics
+Rathe Insurance,7127.72,1041.0,Growth,Retail and consumer,Nordics
+Elvan Health,5201.37,635.6,Growth,Other,DACH
+Carrow Industries,5434.04,789.8,Growth,Public sector,Rest of world
+Marlow Holdings,5070.38,598.2,Growth,Financial services,DACH
+Quorn Energy,7952.49,856.4,Growth,Financial services,DACH
+Garnet Partners,5082.38,360.6,Growth,Telecoms and media,DACH
+Linden Partners,5497.99,945.5,Growth,Retail and consumer,North America
+Wexley Partners,4690.03,786.6,Growth,Energy,North America
+Kestrel Networks,5008.44,654.2,Growth,Financial services,Rest of world
+Marlow Partners,3522.42,424.1,Growth,Financial services,Rest of world
+Juno Re,2609.34,341.4,Growth,Retail and consumer,DACH
+Pellam Media,4672.71,20.0,Growth,Financial services,DACH
+Sorrel Re,6003.25,351.4,Growth,Manufacturing,Nordics
+Alder Logistics,2631.5,452.0,Growth,Energy,DACH
+Pellam Logistics,5133.12,903.6,Growth,Manufacturing,Nordics
+Garnet Energy,4897.46,576.4,Growth,Energy,DACH
+Varley Energy,770.18,947.6,Growth,Manufacturing,DACH
+Yarrow Stores,5069.55,741.6,Growth,Energy,DACH
+Wexley Re,6249.4,1165.7,Growth,Public sector,DACH
+Nordvik Group,6077.71,460.9,Growth,Other,Nordics
+Juno Holdings,7817.09,807.1,Growth,Manufacturing,DACH
+Isar Industries,5428.95,827.6,Growth,Financial services,DACH
+Wexley Networks,6983.27,1243.5,Growth,Financial services,Benelux
+Garnet Holdings,7400.64,511.2,Growth,Public sector,DACH
+Yarrow Retail,5857.49,814.8,Growth,Healthcare,UK and Ireland
+Rathe Payments,2957.29,524.7,Growth,Financial services,DACH
+Linden Payments,5597.04,801.8,Growth,Telecoms and media,North America
+Quorn Group,7687.33,539.5,Growth,Manufacturing,DACH
+Marlow Insurance,7757.56,445.3,Growth,Energy,Nordics
+Nordvik Pharma,5886.28,918.7,Growth,Manufacturing,Nordics
+Isar Payments,6288.5,438.3,Growth,Financial services,Nordics
+Wexley Stores,4965.25,1042.6,Growth,Manufacturing,DACH
+Isar Pharma,3357.18,681.2,Growth,Other,Nordics
+Nordvik Markets,9263.94,617.3,Growth,Financial services,Nordics
+Linden Re,4950.15,397.5,Growth,Financial services,DACH
+Varley Stores,2482.46,204.1,Starter,Healthcare,Rest of world
+Juno Foods,2075.1,243.1,Starter,Telecoms and media,DACH
+Garnet Motors,1303.5,95.0,Starter,Financial services,Nordics
+Fenwick Industries,2259.95,234.8,Starter,Public sector,North America
+Hollin Logistics,1741.19,159.7,Starter,Financial services,DACH
+Dunmore Bank,1752.76,132.5,Starter,Public sector,UK and Ireland
+Carrow Networks,1713.3,58.3,Starter,Manufacturing,DACH
+Fenwick Bank,820.1,187.5,Starter,Other,DACH
+Rathe Systems,1754.85,173.5,Starter,Telecoms and media,DACH
+Wexley Group,1190.47,181.5,Starter,Manufacturing,Nordics
+Varley Foods,1661.8,25.6,Starter,Manufacturing,Nordics
+Kestrel Industries,1396.43,167.9,Starter,Manufacturing,DACH
+Orrin Re,2740.78,258.7,Starter,Retail and consumer,DACH
+Tamar Motors,2571.0,288.7,Starter,Retail and consumer,DACH
+Linden Logistics,1375.08,102.2,Starter,Retail and consumer,Benelux
+Elvan Markets,770.18,192.6,Starter,Public sector,UK and Ireland
+Orrin Partners,2123.42,123.0,Starter,Retail and consumer,DACH
+Juno Insurance,2368.02,185.8,Starter,Retail and consumer,Rest of world
+Quorn Motors,1179.04,135.5,Starter,Retail and consumer,DACH
+Sorrel Foods,2960.78,304.2,Starter,Manufacturing,Nordics
+Kestrel Labs,1592.02,253.7,Starter,Manufacturing,UK and Ireland
+Wexley Systems,2623.92,137.0,Starter,Financial services,UK and Ireland
+Rathe Labs,2846.04,57.0,Starter,Telecoms and media,DACH
+Nordvik Energy,2213.45,249.4,Starter,Public sector,Rest of world
+Elvan Bank,1531.91,147.8,Starter,Financial services,DACH
+Yarrow Partners,2126.72,165.3,Starter,Retail and consumer,DACH
+Orrin Systems,1646.43,257.5,Starter,Financial services,Nordics
+Isar Motors,1800.18,139.0,Starter,Retail and consumer,DACH
+Pellam Stores,770.18,165.1,Starter,Manufacturing,DACH
+Juno Energy,1361.34,172.7,Starter,Telecoms and media,Benelux
+Elvan Systems,770.18,144.6,Starter,Other,DACH
+Carrow Group,1572.65,126.9,Starter,Financial services,DACH
+Rathe Foods,1320.42,224.6,Starter,Energy,UK and Ireland
+Elvan Partners,1461.22,113.3,Starter,Telecoms and media,DACH
+Linden Markets,3280.16,158.0,Starter,Financial services,DACH
+Garnet Retail,2404.8,217.0,Starter,Manufacturing,UK and Ireland
+Carrow Stores,2197.45,268.7,Starter,Healthcare,DACH
+Juno Telecom,1821.49,208.0,Starter,Healthcare,DACH
+Juno Industries,1758.96,166.2,Starter,Public sector,North America
+Elvan Payments,969.21,92.6,Starter,Manufacturing,DACH
+Hollin Group,1230.42,199.6,Starter,Other,UK and Ireland
+Pellam Industries,2206.33,204.3,Starter,Public sector,Benelux
+Wexley Foods,2141.87,223.5,Starter,Public sector,DACH
+Alder Systems,2177.42,261.9,Starter,Telecoms and media,North America
+Ulver Insurance,933.89,74.9,Starter,Healthcare,DACH
+Fenwick Labs,770.18,146.1,Starter,Financial services,DACH
+Marlow Networks,1601.3,275.3,Starter,Retail and consumer,Benelux
+Elvan Networks,2115.84,118.9,Starter,Public sector,Benelux
+Wexley Bank,1278.82,248.2,Starter,Financial services,Benelux
+Tamar Retail,1339.17,158.5,Starter,Financial services,DACH
+Dunmore Insurance,1395.77,161.5,Starter,Public sector,DACH
+Baltic Re,2517.44,199.0,Starter,Retail and consumer,DACH
+Linden Telecom,1037.46,215.3,Starter,Financial services,Benelux
+Marlow Capital,1988.88,192.3,Starter,Retail and consumer,North America
+Garnet Foods,2350.54,177.9,Starter,Financial services,North America
+Tamar Pharma,2429.11,171.6,Starter,Telecoms and media,DACH
+Rathe Logistics,1908.42,152.9,Starter,Public sector,UK and Ireland
+Marlow Mobility,829.45,133.7,Starter,Financial services,DACH
+Pellam Group,909.8,108.4,Starter,Healthcare,North America

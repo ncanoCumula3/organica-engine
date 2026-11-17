@@ -1,0 +1,23 @@
+[theme]
+# The Mindgroup palette, which engine/brand.py holds for the code. Streamlit reads this
+# file before any python runs, so these four are the one copy that cannot import it.
+primaryColor="#19434E"
+backgroundColor="#F9FDFF"
+secondaryBackgroundColor="#EFF6F8"
+textColor="#12333B"
+font="sans serif"
+base="light"
+[server]
+headless=true
+maxUploadSize=50
+[browser]
+gatherUsageStats=false
+[client]
+# Streamlit prints a full stack trace into the page on an unhandled exception. A trace
+# from the reasoning client carries the host it called, so the page would disclose the
+# supplier at exactly the moment something goes wrong in front of a prospect. Errors are
+# caught and rendered as one neutral sentence by the app; anything that escapes that shows
+# as a generic message and the detail goes to the server log only.
+showErrorDetails="none"
+# Hide the developer toolbar (rerun, clear cache, "Deploy"), which is not for a client.
+toolbarMode="minimal"
